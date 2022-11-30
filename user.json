@@ -1,0 +1,26 @@
+{
+  "id": "11",
+  "name": "Jack",
+  "username": "Bart",
+  "email": "google@gmail.com",
+  "address": {
+    "address": "Address",
+    "street": "Wall",
+    "suite": "Apt. 332",
+    "city": "Boston",
+    "zipcode": "23213"
+  },
+  "geo": {
+    "geo": "Geo",
+    "lat": "38.21441",
+    "Ing": "32.51532"
+  },
+  "company": {
+    "company": "Company",
+    "phone": "123455151",
+    "website": "google.com",
+    "name": "Google",
+    "catchPhrase": "dadsa",
+    "bs": "s"
+  }
+}
