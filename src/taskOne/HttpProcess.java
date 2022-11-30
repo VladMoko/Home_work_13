@@ -31,9 +31,7 @@ public class HttpProcess {
             HttpResponse<String> send = client.send(user, HttpResponse.BodyHandlers.ofString());
             System.out.println("send.statusCode() = " + send.statusCode());
             System.out.println("send.body() = " + send.body());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -52,9 +50,7 @@ public class HttpProcess {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println("response.statusCode() = " + response.statusCode());
             System.out.println("response.body() = " + response.body());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -72,9 +68,7 @@ public class HttpProcess {
         try {
             HttpResponse<String> send = client.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println("send.statusCode() = " + send.statusCode());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -93,9 +87,7 @@ public class HttpProcess {
             HttpResponse<String> send = client.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println("send.statusCode() = " + send.statusCode());
             System.out.println("send.body() = " + send.body());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -114,9 +106,7 @@ public class HttpProcess {
             HttpResponse<String> send = client.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println("send.statusCode() = " + send.statusCode());
             System.out.println("send.body() = " + send.body());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -135,9 +125,7 @@ public class HttpProcess {
             HttpResponse<String> send = client.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println("send.statusCode() = " + send.statusCode());
             System.out.println("send.body() = " + send.body());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
