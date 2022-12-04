@@ -2,10 +2,10 @@ package gson;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import users.Address;
-import users.Company;
-import users.Geo;
-import users.User;
+import otions.Address;
+import otions.Company;
+import otions.Geo;
+import otions.User;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -17,7 +17,7 @@ public class GsonObj {
         creator();
     }
 
-    public static Object options(){
+    public static User options(){
         Address address = new Address("Address", "Wall", "Apt. 332", "Boston", "23213");
         Geo geo = new Geo("Geo", "38.21441", "32.51532");
         Company company = new Company("Company", "123455151",

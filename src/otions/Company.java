@@ -1,4 +1,4 @@
-package users;
+package otions;
 
 public class Company {
     private String company;

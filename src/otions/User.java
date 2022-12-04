@@ -1,4 +1,4 @@
-package users;
+package otions;
 
 public class User {
     private String id;

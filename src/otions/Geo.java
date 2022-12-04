@@ -1,7 +1,7 @@
-package users;
+package otions;
 
 public class Geo {
-    private String geo;
+    private final String geo;
     private String lat;
     private String Ing;
 
