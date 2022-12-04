@@ -1,24 +1,24 @@
 package otions;
 
 public class Post {
-    private String userId;
-    private String id;
+    private Integer userId;
+    private Integer id;
     private String title;
     private String body;
 
-    public String getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -38,7 +38,7 @@ public class Post {
         this.body = body;
     }
 
-    public Post(String userId, String id, String title, String body) {
+    public Post(Integer userId, Integer id, String title, String body) {
         this.userId = userId;
         this.id = id;
         this.title = title;

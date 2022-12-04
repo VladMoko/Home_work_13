@@ -1,13 +1,16 @@
 package taskOne;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import otions.Comment;
+import otions.Post;
 import otions.Todo;
-import java.io.BufferedWriter;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -25,8 +28,9 @@ public class HttpProcess {
         getUsername();
         delete();
         getUserId();
-        System.out.println("user.toDo(4) = " + user.toDo(4));
-        System.out.println("user.getComments(1) = " + user.getComments(1));
+        System.out.println("user.toDo(1) = " + user.toDo(1));
+        user.getCommentsToLastPost(4);
+
     }
 
 
@@ -143,27 +147,55 @@ public class HttpProcess {
         }
     }
 
-    public List<Comment> getComments(int id) throws IOException, InterruptedException {
-        String userURL = "https://jsonplaceholder.typicode.com/users/";
-        int y = id * 10;
-        Gson gson = new Gson();
+    public int getLastPost(int id) throws IOException, InterruptedException {
+
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(String.format(userURL + id + "posts")))
-                .header("Content-type", "")
+                .uri(URI.create("https://jsonplaceholder.typicode.com/users/" + id + "/posts"))
                 .GET()
                 .build();
-
         HttpClient client = HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_1_1)
                 .build();
-
         HttpResponse<String> send = client.send(request, HttpResponse.BodyHandlers.ofString());
-        List<Comment> list = gson.fromJson(send.body(), new TypeToken<List<Comment>>(){}.getType());
+        List<Post> posts = new Gson().fromJson(send.body(), new TypeToken<List<Post>>() {
+        }.getType());
 
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("user-" + id + "-post-" + y + "-comments.json"));
+        return getLastPostId(posts);
+    }
 
-        return list;
+    public void getCommentsToLastPost(int userId) throws IOException, InterruptedException {
+        int lastPostId = getLastPost(userId);
+        URI uri = null;
+        try {
+            uri = new URI("https://jsonplaceholder.typicode.com/posts/" + userId + "/comments");
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(uri)
+                .build();
+
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        assert response != null;
+        List<Comment> comments = new Gson().fromJson(response.body(), new TypeToken<List<Comment>>() {
+        }
+                .getType());
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try (FileWriter writer = new FileWriter("user-" + userId +
+                "-post-" + lastPostId + "-comments.json")) {
+            gson.toJson(comments, writer);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -172,7 +204,7 @@ public class HttpProcess {
         Gson gson = new Gson();
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(String.format(url + id + "/todos?completed=false")))
+                .uri(URI.create(url + id + "/todos?completed=false"))
                 .GET()
                 .build();
         HttpClient client = HttpClient.newBuilder()
@@ -181,13 +213,22 @@ public class HttpProcess {
         HttpResponse<String> send = null;
         try {
             send = client.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-        List<Todo> list = gson.fromJson(send.body(), new TypeToken<List<Todo>>() {
+        assert send != null;
+        return gson.fromJson(send.body(), new TypeToken<List<Todo>>() {
         }.getType());
-        return list;
     }
+
+    private int getLastPostId(List<Post> post) {
+        Integer lastId = 0;
+        for (Post o : post) {
+            if (o.getId() > lastId) {
+                lastId = o.getId();
+            }
+        }
+        return lastId;
+    }
+
 }
